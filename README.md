@@ -71,7 +71,7 @@ The file contains information about SNP ID, marker id, chromosome number, gene e
  
   Run the same command for different chromosome 2-10 for maize and teosinate for files already in sorted to have genotypes values in descending order based on position i.e._SNPD_. 
   
-  ## NOTE: Should have run the sed command before generating individual chromosome files with genotype values in descensing order. I ran the sed command in the files already sorted to have descending order and stored the values in new file. So the files with name ch1_SNPD_maize.txt has SNP values based on decending order of positions for chromosome 1 with missing values replaced as '-' and ch1_SNPD_maize has SNP values in decreasing order only
+  ### NOTE: Should have run the sed command before generating individual chromosome files with genotype values in descensing order. I ran the sed command in the files already sorted to have descending order and stored the values in new file. So the files with name ch1_SNPD_maize.txt has SNP values based on decending order of positions for chromosome 1 with missing values replaced as '-' and ch1_SNPD_maize has SNP values in decreasing order only
  
  ## To generate file with unknown value
  
