@@ -10,7 +10,7 @@ Initial Repository set up steps:
 1. Full Size: $ **ls -lh fang_et_al_genotypes.txt**: 11 MB
 2. Line count: $ **wc fang_et_al_genotypes.txt** :2783  2744038 1105193
 3. File content: $ **cat fang_et_al_genotypes.txt**
-4. Information: $ **head fang_et_al_genotypes.txt** : get information - SAMPLE ID, Group and glimpse of information in the file
+4. Information: $ **head fang_et_al_genotypes.txt** 
 5. Information: $ **tail fang_et_al_genotypes.txt**:
 6. Brief Overview: $ **less fang_et_al_genotypes.txt**: 
 7. Total Column count: $ **awk -F "\t" '{print NF; exit}' fang_et_al_genotypes.txt** : 986
@@ -18,7 +18,7 @@ Initial Repository set up steps:
 * snp_position.txt file
 1. Full size: $ **ls -lh snp_position.txt** : 81 K
 2. Line count: $ **wc snp_position.txt** : 984 13198 82763 snp_position.txt
-3. File contents: $ **cat snp_position.txt** : returns contents of file- columns-SNP_ID, cdv_marker_id, Chromosome, Position, gene etc
+3. File contents: $ **cat snp_position.txt** : 
 4. File information: $ **head snp_position.txt** :
 5. File information: $ **tail snp_position.txt**: 
 6. Brief overview: $ **less snp_position.txt**
@@ -26,12 +26,13 @@ Initial Repository set up steps:
 8. 
 
 ## Information obtained using data inspection tools- Fang et al.txt:
-This is huge file of approximately 11MB and 2783 lines of information. It is clearly oberved when you run $ cat, $ head and $ less command. Upon running these commands we get the information - SAMPLE ID, Group 
+This is huge file of approximately 11MB and 2783 lines of information. It is clearly oberved when you run $ cat, $ head and $ less command.
 
 ## Information obtained using data inspection tools- snp_position.txt:
-THe file contains information about SNP ID, marker id, chromosome number, gene etc.It is quite small file compared to fang_et_al file. 
+The file contains information about SNP ID, marker id, chromosome number, gene etc of the genotype fata in fang et al.It is quite small file compared to fang_et_al file. 
 
-# Data processing
+# Data processing 
+  ** to prepare files before generating individual files (need to move or copy the transpose.awk in the local repository to run this command) 
 
 1. cut -f3 fang_et_al_genotypes.txt |sort|uniq -c
 2. grep 'ZMM' fang_et_al_genotypes.txt > maize_genotype
@@ -51,31 +52,42 @@ THe file contains information about SNP ID, marker id, chromosome number, gene e
 16. cut -f1,3,4,16-1586 joined_maize_file > genotype_maize_file
 17. cut -f1,3,4,16-988 joined_ teosinate_file > genotype_teosinate_file
 
-## To generate individual file for chromosome 1-10 in ascending order with ? for missing values
-  (need to move or copy the transpose.awk in the local repository to run this command)
-  
+## To generate individual file for chromosome 1-10 in ascending order (SNPA) with ? for missing values
+ 
   1. awk '$2 == 1' genotype_maize_file | sort -k3,3n > ch1_SNPA_maize
   2. awk '$2 == 2' genotype_maize_file | sort -k3,3n > ch1_SNPA_teosinate 
 
-## To generate individual file for chromosome 1-10 in descending order
+## To generate individual file for chromosome 1-10 in descending order (SNPD)
 
   1. awk '$2 == 1' genotype_maize_file | sort -k3,3nr > ch1_SNPA_maize
   2. awk '$2 == 2' genotype_maize_file | sort -k3,3nr > ch1_SNPA_teosinate
  
- Similarly, run awk command for remaining chromosome number 2-10 for maize and teosinate. Also ran $ cat to check the contents of the file and make sure they were not empty
+ Similarly, run awk command for remaining chromosome number 2-10 for maize and teosinate. Also ran $ cat to check the contents of the file and make sure they were not empty. May be can try loop eg. FOR loop to create files using single code
  
- ## NOTE: should have run the sed command before generating individual chromosome files in descensing order
+ ## To generate files to replace missing values '?' with '-'
  
  1. sed -e 's/?/-/g' ch1_SNPD_maize > ch1_SNPD_maize.txt
  2. sed -e 's/?/-/g' ch1_SNPD_teosinate > ch1_SNPD_teosinate.txt
  
- ### Run the same command for different chromosome 2-10 for maize and teosinate. So the files ch1_SNPD_maize.txt has SNP values based on decending order of positions for chromosome 1 with missing values replaced as '-' and ch1_SNPD_maize has SNP values in decreasing order only
+  Run the same command for different chromosome 2-10 for maize and teosinate for files already in sorted to have genotypes values in descending order based on position i.e._SNPD_. 
+  
+  ## NOTE: Should have run the sed command before generating individual chromosome files with genotype values in descensing order. I ran the sed command in the files already sorted to have descending order and stored the values in new file. So the files with name ch1_SNPD_maize.txt has SNP values based on decending order of positions for chromosome 1 with missing values replaced as '-' and ch1_SNPD_maize has SNP values in decreasing order only
  
  ## To generate file with unknown value
+ 
  1. awk '$2 == "unknown"' genotype_maize_file > unknown_maize_file
  2. awk '$2 == "unknown"' genotype_teosinate_file > unknown_teosinate_file
  
  ## To generate file with multiple value
+ 
  1. awk '$2 == "multiple"' genotype_maize_file > multiple_maize_file
  2. awk '$2 == "multple"' genotype_teosinate_file > multiple_teosinate_file
  
+## To upload the files on Git
+     * Collected the required files in the parent directory
+     * Git add
+     * Git status
+     * Git commit
+     * Git push
+     
+
